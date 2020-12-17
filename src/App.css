@@ -1,4 +1,40 @@
-main {
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+
+* {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+h1 {
+  font-size:3.9em;
+}
+
+h2 {
+  font-size:12em;
+}
+
+h3 {
+  font-size:2em;
+}
+
+p {
+  font-size: 1.0em;
+}
+
+a {
+  text-decoration: none;
+  font-size:1.2em;
+}
+
+a:hover {
+  color:#6fc3df;
+}
+
+button:hover {
+  color:#6fc3df;
+  border: 1px solid #6fc3df;
+  cursor:pointer;
+}
+
+/* main {
   align-content: center;
   box-sizing: border-box;
   display: grid;
@@ -41,4 +77,4 @@ pre {
 code:before,
 code:after {
   content: '\`';
-}
+} */
