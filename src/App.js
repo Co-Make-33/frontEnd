@@ -9,9 +9,11 @@ import Developers from './components/Developers';
 import MeetTheTeam from './components/MeetTheTeam';
 import Signup from './components/MeetTheTeam';
 import Login from './components/Login';
+
 import PrivateRoute from './utils/PrivateRoute';
 import IssuesList from './components/IssuesList';
 import AddIssue from './components/AddIssue';
+import CreateProfile from './components/CreateProfile';
 
 export const LoginContext = createContext()
 
@@ -30,7 +32,7 @@ function App() {
         <Route path='/signup' component={Signup}/>
         <Route path='/addissue' component={AddIssue}/>
         <Route path='/issueslist' component={IssuesList}/>
-
+        <Route path='/createprofile' component={CreateProfile}/>
       </Router>
     </div>
   );
