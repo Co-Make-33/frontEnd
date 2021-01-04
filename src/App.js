@@ -11,7 +11,7 @@ import Signup from './components/MeetTheTeam';
 import Login from './components/Login';
 
 import PrivateRoute from './utils/PrivateRoute';
-import IssuesList from './components/IssuesList';
+import IssuesPage from './components/IssuesPage';
 import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
 
@@ -31,8 +31,9 @@ function App() {
         <Route path='/login' component={Login}/>
         <Route path='/signup' component={Signup}/>
         <Route path='/addissue' component={AddIssue}/>
-        <Route path='/issueslist' component={IssuesList}/>
+        <Route path='/issues' component={IssuesPage}/>
         <Route path='/createprofile' component={CreateProfile}/>
+
       </Router>
     </div>
   );
