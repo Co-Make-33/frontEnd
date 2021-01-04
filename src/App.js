@@ -9,6 +9,7 @@ import Developers from './components/Developers';
 import MeetTheTeam from './components/MeetTheTeam';
 import Signup from './components/MeetTheTeam';
 import Login from './components/Login';
+import CreateProfile from './components/CreateProfile';
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
         <Route path='/developers' component={Developers}/>
         <Route path='/login' component={Login}/>
         <Route path='/signup' component={Signup}/>
-
+        <Route path='/createprofile' component={CreateProfile}/>
       </Router>
     </div>
   );
