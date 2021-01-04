@@ -25,7 +25,6 @@ function Nav(props) {
         <div>
             <StyledNavBar>
                 <StyledNavUl>
-                    {/* <Link to '/home'><li>Home</li></Link> */}
                     <Link to='/home'>Home</Link>
                     <Link to='/meettheteam'>Meet the Team</Link>
                     <Link to='/developers'>Developers</Link>

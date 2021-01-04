@@ -101,7 +101,8 @@ const HomeButton = styled.button`
     border:1px solid white;
     text-transform:uppercase;
     padding:-2px 2px 0px 2px;
-    margin-top:25px;
+    margin-top:10px;
+    margin-bottom:10px;
     letter-spacing:2px;
     margin-left:4%;
     background-color:#242943;
