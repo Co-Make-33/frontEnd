@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
-import IssuesList from './IssuesList';
-// import Link from 'react-router-dom';
-// import IssueCard from './IssueCard';
+import { Link } from 'react-router-dom';
+import IssueCard from './IssueCard';
 
 const IssuesPage = () => {
     const[issuesList, setIssuesList] = useState([]);
@@ -22,7 +21,8 @@ const IssuesPage = () => {
 
     return (
         <>
-            <IssuesList issues={issuesList} updateIssues={setIssuesList}/>
+            <Link to='/addissue'>Create or Edit an Issue Submission</Link>
+            
         </>
     )
 
