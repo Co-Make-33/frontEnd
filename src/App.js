@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 
@@ -9,7 +9,13 @@ import Developers from './components/Developers';
 import MeetTheTeam from './components/MeetTheTeam';
 import Signup from './components/MeetTheTeam';
 import Login from './components/Login';
+
+import PrivateRoute from './utils/PrivateRoute';
+import IssuesList from './components/IssuesList';
+import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
+
+export const LoginContext = createContext()
 
 function App() {
   return (
@@ -24,6 +30,8 @@ function App() {
         <Route path='/developers' component={Developers}/>
         <Route path='/login' component={Login}/>
         <Route path='/signup' component={Signup}/>
+        <Route path='/addissue' component={AddIssue}/>
+        <Route path='/issueslist' component={IssuesList}/>
         <Route path='/createprofile' component={CreateProfile}/>
       </Router>
     </div>
