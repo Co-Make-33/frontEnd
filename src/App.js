@@ -15,7 +15,7 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 
 import PrivateRoute from './utils/PrivateRoute';
-import IssuesList from './components/IssuesList';
+import IssuesPage from './components/IssuesPage';
 import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
 

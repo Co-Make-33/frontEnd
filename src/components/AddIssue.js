@@ -1,8 +1,35 @@
 import React, { useState } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import IssueCard from './IssueCard';
-import LoginContext from '../App';
-import {Link} from 'react-router-dom';
+import styled, { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+    * {
+        /* border: 1px solid black; */
+    }
+
+    input {
+        width:75%;
+        justify-content:center;
+    }
+
+    form {
+        width:100%;
+    }
+`
+
+const StyledAddIssue = styled.div`
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+`
+
+const StyledAddForm = styled.div`
+    display:flex;
+    width:50%;
+`
+
+// import LoginContext from '../App';
 
 const initialIssues = {
     name: '',
@@ -40,14 +67,12 @@ const AddIssue = () => {
     }
 
 
-
-
     return (
         <>
         <div>
-
-            {/* <Link to='/profile' >Profile</Link> */}
-            <h1>{`Your submitted issues:`}</h1>
+        <GlobalStyle/>
+        <StyledAddIssue>
+            <h2>{`Your submitted issues:`}</h2>
             <div>
             {
                 userIssues.map((item, key) => {
@@ -56,11 +81,11 @@ const AddIssue = () => {
             }
             </div>
             <button onClick={()=> setAddIssue(!addIssue)}>{addIssue ? 'Cancel' : 'List a new issue'}</button>
+            <StyledAddForm>
             {addIssue &&
-            <div>
                 <form onSubmit={onSubmit}>
                     <label>
-                        Issue Title:
+                        Issue Title: <br/>
                         <input
                         type='text'
                         name='name'
@@ -69,27 +94,29 @@ const AddIssue = () => {
                         onChange={onChange}
                         />
                     </label>
+                    <br/>
                     <label>
-                        Description:
-                        <input
+                        Description: <br/>
+                        <textarea
                         type='text'
+                        rows='20'
+                        cols='60'
+                        style={{resize: 'none'}}
                         name='description'
                         placeholder='Describe your issue'
                         value={newIssueValues.description}
                         onChange={onChange}
                         />
                     </label>
+                    <br/>
                     <button>Submit Issue</button>
                 </form>
-            </div>
             }
-    
+            </StyledAddForm>
+        </StyledAddIssue>
         </div>
         </>
     )
-
-
-
 }
 export default AddIssue
 
