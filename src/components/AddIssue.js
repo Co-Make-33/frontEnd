@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
-import IssueCard from './IssueCard';
-import { LoginContext } from '../App';
+import UserIssueCard from './UserIssueCard';
 import styled, { createGlobalStyle } from 'styled-components';
+import LoginContext from '../App';
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -37,15 +37,33 @@ const initialIssues = {
     description: ''
 }
 
+const myIssues = {
+    name: 'Pothole on Magnolia Street',
+    description: 'There is a massive pothole on the East Side of the Road. Be careful when driving.'
+}
+
 const AddIssue = ( issues, updateIssues ) => {
     const [userIssues, setUserIssues] = useState([]);
     const [addIssue, setAddIssue] = useState(false);
     const [newIssueValues, setNewIssueValues] = useState(initialIssues);
 
-    const loginInfo = useContext(LoginContext)
-    const name = loginInfo.username.charAt(0).toUpperCase() + loginInfo.username.slice(1)
-    const id = loginInfo.subject
-    console.log('Logged in ',loginInfo)
+    // const loginInfo = useContext(LoginContext)
+    // const name = loginInfo.username.charAt(0).toUpperCase() + loginInfo.username.slice(1)
+    // const id = loginInfo.subject
+    // console.log('Logged in ',loginInfo)
+
+    useEffect(() => {
+        getIssues();
+    }, [])
+
+    const getIssues = () => {
+        axiosWithAuth()
+            .get('https://co-make-33.herokuapp.com/api/users/issues')
+            .then(res => {
+                setUserIssues(res.data)
+            })
+            .catch(err => console.log(err))
+    }
 
     const onChange = (e) => {
         setNewIssueValues({
@@ -67,15 +85,15 @@ const AddIssue = ( issues, updateIssues ) => {
         })
     }
 
-    const deleteIssue = e => {
-        e.preventDefault();
-        axiosWithAuth()
-        .delete('https://co-make-33.herokuapp.com/api/issues/:id')
-        .then(res => {
-            updateIssues(issues.filter((item) => item.id !== id))
-        })
-        .catch(err => console.log(err))
-    }
+    // const deleteIssue = e => {
+    //     e.preventDefault();
+    //     axiosWithAuth()
+    //     .delete('https://co-make-33.herokuapp.com/api/issues/:id')
+    //     .then(res => {
+    //         updateIssues(issues.filter((item) => item.id !== id))
+    //     })
+    //     .catch(err => console.log(err))
+    // }
 
 
 
@@ -88,7 +106,7 @@ const AddIssue = ( issues, updateIssues ) => {
             <div>
             {
                 userIssues.map((issue, key) => {
-                    return <IssueCard issue={issue} key={key} />
+                    return <UserIssueCard issue={issue} key={key} />
                 })
             }
             </div>
