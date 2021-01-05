@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
+import {AuthContext} from '../contexts/AuthContext';
 import styled from 'styled-components';
 
 const StyledNavBar = styled.nav`
@@ -20,6 +21,15 @@ const StyledNavUl = styled.ul`
 `;
 
 function Nav(props) {
+  const {authorized, setAuthorized} = useContext(AuthContext);
+
+  const handleClick = () => {
+    setAuthorized(false)
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('authState')
+
+  }
+
   return (
     <div>
       <StyledNavBar>
@@ -27,8 +37,10 @@ function Nav(props) {
           <Link to="/home">Home</Link>
           <Link to="/meettheteam">Meet the Team</Link>
           <Link to="/developers">Developers</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
+          {authorized ? <Link>Profile</Link> : <></>}
+          {authorized ? <Link to='/issues'>Community Issues</Link> : <></>}
+          {authorized ?  <Link onClick={handleClick}>Logout</Link> : <Link to="/login">Login</Link>}
+          {authorized ? <></> : <Link to="/signup">Sign Up</Link>}
         </StyledNavUl>
       </StyledNavBar>
     </div>
