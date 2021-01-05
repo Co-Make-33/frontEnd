@@ -73,7 +73,7 @@ const Login = () => {
         axios
             .post(' https://co-make-33.herokuapp.com/api/login', formData.credentials)
             .then( res => {
-                sessionStorage.setItem('token', res.data.payload)
+                sessionStorage.setItem('token', res.data.token)
                 sessionStorage.setItem('authState', true)
                 setAuthorized(sessionStorage.getItem('authState'))
                 push('/issues')
