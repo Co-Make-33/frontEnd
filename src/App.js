@@ -16,7 +16,6 @@ import Login from './components/Login';
 
 import PrivateRoute from './utils/PrivateRoute';
 import IssuesPage from './components/IssuesPage';
-import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
 
 import {AuthContext} from './contexts/AuthContext'
@@ -40,7 +39,6 @@ function App() {
         <Route path="/developers" component={Developers} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <PrivateRoute path="/addissue" component={AddIssue} />
         <PrivateRoute path="/issues" component={IssuesPage} />
         <Route path="/createprofile" component={CreateProfile} />
         </AuthContext.Provider>
