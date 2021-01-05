@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
+import {useHistory} from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const LoginPage = createGlobalStyle`
 * {
-    color: white;
+    /* color: white; */
 };
 body {
     background-color: #242943
@@ -43,17 +45,39 @@ const ButtonStyle = styled.button`
 
 
 const initialFormValues = {
-    username:'',
-    email:'',
-}
+    credentials: {
+        username:'',
+        password:''
+    }
+};
+
 const initialFormErrors = {
     username:'',
     email:'',
 }
 
 const Login = () => {
+    const [formData, setFormData] = useState(initialFormValues)
+    const {push} = useHistory()
 
+    const handleChange = (e) => {
+        setFormData({
+            credentials: {...formData.credentials, [e.target.name]: e.target.value}
+        })
+    }
 
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        axios
+            .post(' https://co-make-33.herokuapp.com/api/login', formData.credentials)
+            .then( res => {
+                sessionStorage.setItem('token', res.data.payload)
+                push('/issueslist')
+            })
+            .catch( err => {
+                console.log(err.message)
+            })
+    }
 
     return (
 <>
@@ -63,11 +87,11 @@ const Login = () => {
             <H3style>Login</H3style>
         </LoginTxtDiv>
 
-        <FormStyle>
-            <LabelStyle>Userame<br/>
+        <FormStyle onSubmit={handleSubmit}>
+            <LabelStyle>Username<br/>
                 <input
-                // value={values.username}
-                // onChange={onChange}
+                value={formData.credentials.username}
+                onChange={handleChange}
                 name='username'
                 type='text'
                 />
@@ -75,8 +99,8 @@ const Login = () => {
 
             <LabelStyle>Password<br/>
                 <input
-                // value={values.password}
-                // onChange={onChange}
+                value={formData.credentials.password}
+                onChange={handleChange}
                 name='password'
                 type='password'
                 />
