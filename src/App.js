@@ -16,10 +16,9 @@ import Login from './components/Login';
 
 import PrivateRoute from './utils/PrivateRoute';
 import IssuesPage from './components/IssuesPage';
-import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
 
-export const LoginContext = createContext();
+// export const LoginContext = createContext();
 
 function App() {
   return (
@@ -34,7 +33,6 @@ function App() {
         <Route path="/developers" component={Developers} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/addissue" component={AddIssue} />
         <PrivateRoute path="/issues" component={IssuesPage} />
         <Route path="/createprofile" component={CreateProfile} />
       </Router>
