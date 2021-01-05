@@ -3,6 +3,11 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 import { Link } from 'react-router-dom';
 import IssueCard from './IssueCard';
 
+// const initialIssues = {
+//     name: 'Pothole on Magnolia Street',
+//     description: 'There is a massive pothole on the East Side of the Road. Be careful when driving.'
+// }
+
 const IssuesPage = () => {
     const[issuesList, setIssuesList] = useState([]);
 
