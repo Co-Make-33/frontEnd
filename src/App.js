@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useState } from 'react';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -19,12 +19,18 @@ import IssuesPage from './components/IssuesPage';
 import AddIssue from './components/AddIssue';
 import CreateProfile from './components/CreateProfile';
 
+import {AuthContext} from './contexts/AuthContext'
+
 export const LoginContext = createContext();
 
 function App() {
+
+  const [authorized, setAuthorized] = useState(sessionStorage.getItem('authState'))
+
   return (
     <div>
       <Router>
+        <AuthContext.Provider value = {{authorized, setAuthorized}}>
         <Nav />
         <Route exact path="/">
           <Redirect to={{ pathname: '/home' }} />
@@ -37,6 +43,7 @@ function App() {
         <Route path="/addissue" component={AddIssue} />
         <PrivateRoute path="/issues" component={IssuesPage} />
         <Route path="/createprofile" component={CreateProfile} />
+        </AuthContext.Provider>
       </Router>
     </div>
   );
