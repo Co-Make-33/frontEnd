@@ -40,7 +40,7 @@ function App() {
         <Route path="/developers" component={Developers} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route path="/addissue" component={AddIssue} />
+        <PrivateRoute path="/addissue" component={AddIssue} />
         <PrivateRoute path="/issues" component={IssuesPage} />
         <Route path="/createprofile" component={CreateProfile} />
         </AuthContext.Provider>
