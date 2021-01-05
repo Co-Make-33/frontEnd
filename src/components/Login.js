@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import {AuthContext} from '../contexts/AuthContext';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const LoginPage = createGlobalStyle`
@@ -57,6 +58,7 @@ const initialFormErrors = {
 }
 
 const Login = () => {
+    const {setAuthorized} = useContext(AuthContext)
     const [formData, setFormData] = useState(initialFormValues)
     const {push} = useHistory()
 
@@ -72,6 +74,8 @@ const Login = () => {
             .post(' https://co-make-33.herokuapp.com/api/login', formData.credentials)
             .then( res => {
                 sessionStorage.setItem('token', res.data.payload)
+                sessionStorage.setItem('authState', true)
+                setAuthorized(sessionStorage.getItem('authState'))
                 push('/issues')
             })
             .catch( err => {
