@@ -35,7 +35,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/addissue" component={AddIssue} />
-        <Route path="/issues" component={IssuesPage} />
+        <PrivateRoute path="/issues" component={IssuesPage} />
         <Route path="/createprofile" component={CreateProfile} />
       </Router>
     </div>
