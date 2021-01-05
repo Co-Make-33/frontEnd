@@ -22,7 +22,11 @@ const IssuesPage = () => {
     return (
         <>
             <Link to='/addissue'>Create or Edit an Issue Submission</Link>
-            
+            {
+                issuesList.map((issue, key) => {
+                    return <IssueCard issue={issue} key={key}/>
+                })
+            }
         </>
     )
 

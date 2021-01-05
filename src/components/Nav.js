@@ -8,7 +8,7 @@ const StyledNavBar = styled.nav`
   justify-content: space-evenly;
   padding: 10px;
   color: #626262;
-`;
+`
 
 const StyledNavUl = styled.ul`
   display: flex;
