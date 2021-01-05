@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import IssueCard from './IssueCard';
+import { LoginContext } from '../App';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -9,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     input {
-        width:75%;
+        width:50%;
         justify-content:center;
     }
 
@@ -36,15 +37,15 @@ const initialIssues = {
     description: ''
 }
 
-const AddIssue = () => {
+const AddIssue = ( issues, updateIssues ) => {
     const [userIssues, setUserIssues] = useState([]);
     const [addIssue, setAddIssue] = useState(false);
     const [newIssueValues, setNewIssueValues] = useState(initialIssues);
 
-    // const loginInfo = useContext(LoginContext)
-    // const name = loginInfo.username.charAt(0).toUpperCase() + loginInfo.username.slice(1)
-    // const id = loginInfo.subject
-    // console.log('Logged in ',loginInfo)
+    const loginInfo = useContext(LoginContext)
+    const name = loginInfo.username.charAt(0).toUpperCase() + loginInfo.username.slice(1)
+    const id = loginInfo.subject
+    console.log('Logged in ',loginInfo)
 
     const onChange = (e) => {
         setNewIssueValues({
@@ -53,7 +54,7 @@ const AddIssue = () => {
         })
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = e => {
         e.preventDefault()
         axiosWithAuth()
         .post('https://co-make-33.herokuapp.com/api/issues/', newIssueValues)
@@ -66,6 +67,17 @@ const AddIssue = () => {
         })
     }
 
+    const deleteIssue = e => {
+        e.preventDefault();
+        axiosWithAuth()
+        .delete('https://co-make-33.herokuapp.com/api/issues/:id')
+        .then(res => {
+            updateIssues(issues.filter((item) => item.id !== id))
+        })
+        .catch(err => console.log(err))
+    }
+
+
 
     return (
         <>
@@ -75,8 +87,8 @@ const AddIssue = () => {
             <h2>{`Your submitted issues:`}</h2>
             <div>
             {
-                userIssues.map((item, key) => {
-                    return <IssueCard item={item} key={key} />
+                userIssues.map((issue, key) => {
+                    return <IssueCard issue={issue} key={key} />
                 })
             }
             </div>
@@ -89,7 +101,7 @@ const AddIssue = () => {
                         <input
                         type='text'
                         name='name'
-                        placeholder='Please enter title for your issue submission'
+                        placeholder='Enter a title'
                         value={newIssueValues.name}
                         onChange={onChange}
                         />
@@ -119,4 +131,121 @@ const AddIssue = () => {
     )
 }
 export default AddIssue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const AddIssue = ( issues, updateIssues ) => {
+//     const [userIssues, setUserIssues] = useState([]);
+//     const [addIssue, setAddIssue] = useState(false);
+//     const [newIssueValues, setNewIssueValues] = useState(initialIssues);
+
+//     // const loginInfo = useContext(LoginContext)
+//     // const name = loginInfo.username.charAt(0).toUpperCase() + loginInfo.username.slice(1)
+//     // const id = loginInfo.subject
+//     // console.log('Logged in ',loginInfo)
+
+//     const onChange = (e) => {
+//         setNewIssueValues({
+//             ...newIssueValues,
+//             [e.target.name]: e.target.value
+//         })
+//     }
+
+//     const onSubmit = e => {
+//         e.preventDefault()
+//         axiosWithAuth()
+//         .post('https://co-make-33.herokuapp.com/api/issues/', newIssueValues)
+//         .then(res => {
+//             console.log(res)
+//             setUserIssues(res.data)
+//         })
+//         .catch(err => {
+//             console.log(err)
+//         })
+//     }
+
+//     const deleteIssue = e => {
+//         e.preventDefault();
+//         axiosWithAuth()
+//         .delete('https://co-make-33.herokuapp.com/api/issues/:id')
+//         .then(res => {
+//             updateIssues(issues.filter((item) => item.id !== id))
+//         })
+//         .catch(err => console.log(err))
+//     }
+
+
+
+//     return (
+//         <>
+//         <div>
+//         <GlobalStyle/>
+//         <StyledAddIssue>
+//             <h2>{`Your submitted issues:`}</h2>
+//             <div>
+//             {
+//                 userIssues.map((item, key) => {
+//                     return <IssueCard item={item} key={key} />
+//                 })
+//             }
+//             </div>
+//             <button onClick={()=> setAddIssue(!addIssue)}>{addIssue ? 'Cancel' : 'List a new issue'}</button>
+//             <StyledAddForm>
+//             {addIssue &&
+//                 <form onSubmit={onSubmit}>
+//                     <label>
+//                         Issue Title: <br/>
+//                         <input
+//                         type='text'
+//                         name='name'
+//                         placeholder='Enter a title'
+//                         value={newIssueValues.name}
+//                         onChange={onChange}
+//                         />
+//                     </label>
+//                     <br/>
+//                     <label>
+//                         Description: <br/>
+//                         <textarea
+//                         type='text'
+//                         rows='20'
+//                         cols='60'
+//                         style={{resize: 'none'}}
+//                         name='description'
+//                         placeholder='Describe your issue'
+//                         value={newIssueValues.description}
+//                         onChange={onChange}
+//                         />
+//                     </label>
+//                     <br/>
+//                     <button>Submit Issue</button>
+//                 </form>
+//             }
+//             </StyledAddForm>
+//         </StyledAddIssue>
+//         </div>
+//         </>
+//     )
+// }
+// export default AddIssue
 
