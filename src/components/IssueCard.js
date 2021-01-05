@@ -55,7 +55,7 @@ const IssueCard = ({ issues, updateIssues }) => {
   const saveEdit = e => {
     e.preventDefault();
     axiosWithAuth()
-      .put(`https://co-make-33.herokuapp.com/api/issues/:${id}`, issueToEdit)
+      .put(`/api/issues/:${id}`, issueToEdit)
       .then(response => {
         updateIssues(issues.map((item) => item.id === response.data.id ? response.data : item));
       })
@@ -64,7 +64,7 @@ const IssueCard = ({ issues, updateIssues }) => {
 
   const deleteIssue = e => {
     axiosWithAuth()
-      .delete(`https://co-make-33.herokuapp.com/api/issues/:${id}`)
+      .delete(`/api/issues/:${id}`)
       .then(response => {
         updateIssues(issues.filter((item) => item.id !== e.id))
       })
@@ -74,7 +74,7 @@ const IssueCard = ({ issues, updateIssues }) => {
   const submitNewIssue = e => {
     e.preventDefault();
     axiosWithAuth()
-      .post(`https://co-make-33.herokuapp.com/api/issues/`, issueToAdd)
+      .post(`/api/issues/`, issueToAdd)
       .then(response => {
         updateIssues(issues.concat(issueToAdd))
       })
