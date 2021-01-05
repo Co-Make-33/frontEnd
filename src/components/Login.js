@@ -72,7 +72,7 @@ const Login = () => {
             .post(' https://co-make-33.herokuapp.com/api/login', formData.credentials)
             .then( res => {
                 sessionStorage.setItem('token', res.data.payload)
-                push('/issueslist')
+                push('/issues')
             })
             .catch( err => {
                 console.log(err.message)
