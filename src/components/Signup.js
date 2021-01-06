@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
+import * as yup from 'yup';
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -62,9 +63,21 @@ const initialValues = {
   password: ''
 };
 
+const initialErrors = {
+  email: '',
+  username: '',
+  password: ''
+};
+
+const initialUser = [];
+
+const initialDisabled = true;
+
 function Signup() {
   const [formValues, setFormValues] = useState(initialValues);
-  const [user, setUser] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState(initialErrors);
+  const [user, setUser] = useState(initialUser);
+  const [disabled, setDisabled] = useState(initialDisabled);
 
   //submit function to keep the page from refreshing (event.preventDefault();) and to pass on the formValues (to the backend) when the state is set by clicking the submit button
   const onSubmit = (event) => {
@@ -74,7 +87,7 @@ function Signup() {
       username: formValues.name.trim(),
       password: formValues.password
     };
-    //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. Then next function should post the data to the backend and then set the state back to it's initial values.
+    //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. //TODOThen next function should post the data to the backend and then set the state back to it's initial values.
     // postNewUser()
     //-or-
     // can't I just set the state of a user, so that it can be passed on to the backend as a state rather than using another function?
@@ -87,10 +100,16 @@ function Signup() {
       .reach(SignupSchema, name)
       .validate(value)
       .then(() => {
-        //what goes here? Set the state for form errors? (see User-Onboarding)
+        setFormErrors({
+          ...formErrors,
+          [name]: ''
+        });
       })
-      .catch(() => {
-        //rly? what goes here? Set the state for form errors?
+      .catch((err) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        });
       });
     setFormValues({
       ...formValues,
@@ -103,6 +122,12 @@ function Signup() {
     const { email, username, password } = event.target;
     inputChange(email, username, password);
   };
+
+  useEffect(() => {
+    SignupSchema.isValid(formValues).then((valid) => {
+      setDisabled(!valid);
+    });
+  }, [formValues]);
 
   return (
     <>
@@ -130,7 +155,7 @@ function Signup() {
           ></input>
           <input
             type="submit"
-            // disabled={disabled}
+            disabled={disabled}
             // onChange={handleChange}
           ></input>
           <Link to="/Login">
@@ -143,3 +168,17 @@ function Signup() {
 }
 
 export default Signup;
+
+//?Ask about how this user information gets passed to the backend
+//This is how I have posted user info with an API in the past, does it work kinda like this?
+// const postNewUser = (newUser) => {
+//   axios
+//     .post("https://reqres.in/api/users", newUser)
+//     .then((res) => {
+//       setUser([res.data, ...user]);
+//       setFormValues(initialValues);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
