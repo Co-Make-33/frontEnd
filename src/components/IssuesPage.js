@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from "react";
-import IssueCard from './IssueCard';
-import axiosWithAuth from "../utils/axiosWithAuth";
+import React from "react";
+import IssuesList from './IssuesList';
+import {IssueProvider} from '../contexts/IssuesContext';
+import AddIssue from './AddIssue';
 
-const IssuesPage = () => {
-  const [issuesList, setIssuesList] = useState([]);
 
-  useEffect(() => {
-    getIssues();    
-  }, [])
 
-  const getIssues = () => {
-    axiosWithAuth()
-      .get('https://co-make-33.herokuapp.com/api/users/issues')
-      .then(response => {
-        setIssuesList(response.data)
-      })
-      .catch(err => console.log(err))
-  }
-
+function IssuesPage () {
   return (
-    <>
-      <IssueCard issues={issuesList} updateIssues={setIssuesList} />
-    </>
-  );
-};
+    <IssueProvider>
+      <div>
+        <IssuesList/>
+        <AddIssue/>
+      </div>
+    </IssueProvider>
+  )
+}
 
-export default IssuesPage;
+export default IssuesPage
