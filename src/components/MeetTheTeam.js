@@ -11,34 +11,51 @@ body {
 }
 `;
 
-const Heading = styled.div`
+const Heading = styled.h2`
   text-align: center;
+  border-bottom: 2px solid white;
+  width: 90%;
+  margin: 2% auto;
+  padding: 1% 0;
 `;
 
 const GithubCards = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   width: 100%;
-  border: 2px solid black;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
-//TODO: make the cards width and spacing reponsive (smaller % and wrapped when big screen, higher % and not wrapped when smaller screen)
 const SingleCard = styled.div`
   display: flex;
   flex-direction: row;
-  width: 75%;
+  width: 45%;
   margin: 3% 0;
   border-radius: 10px;
-  box-shadow: rgba(255, 255, 255, 0.15) 0px 15px 15px,
-    rgba(255, 255, 255, 0.05) 0px 5px 10px;
-  border: 2px solid white;
+  box-shadow: 
+    /* top */ rgba(255, 255, 255, 0.15) 0px -6px 10px,
+    /* right */ rgba(255, 255, 255, 0.15) 6px 0px 10px,
+    /* bottom */ rgba(255, 255, 255, 0.15) 0px 6px 10px,
+    /* left */ rgba(255, 255, 255, 0.15) -6px 0px 10px;
+  border: 2px solid mintcream;
+  /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
+
+  @media (max-width: 800px) {
+    width: 75%;
+    justify-content: space-evenly;
+  }
 `;
 
 const Avatar = styled.img`
   width: 33%;
   margin: 2%;
-  /* border-radius: 50%; */
+  border-radius: 50%;
 `;
 
 const ProfileInfo = styled.div`
@@ -55,19 +72,8 @@ const UserInfo = styled.div`
   line-height: 0.5rem;
 `;
 
-//array of github usernames to be plugged into the axios call loop
-//!Why is this not able to work for an axios call but the next one does?
-// const teamMembers = [
-//   'aprilissy',
-//   'ruizaj13',
-//   'oscfig',
-//   'Plofland',
-//   'emilyr027'
-// ];
-
 const teamMembers = [
   { name: 'April Ashby', login: 'aprilissy' },
-  //!Should have this after the state is set in line 102 {name: 'April Ashby', login:'aprilissy', image: data.avatar_url, url: data.html_url, bio: data.bio, location: data.location}
   { name: 'Emily Ryan', login: 'emilyr027' },
   { name: 'Juan Ruiz', login: 'ruizaj13' },
   { name: 'Peter Lofland', login: 'plofland' },
@@ -75,8 +81,6 @@ const teamMembers = [
 ];
 
 function MeetTheTeam() {
-  //the state that will hold all the info from each teamMember loop iteration
-  //once it is full of each team member's data, it is to be used in a loop in the return statement to create each team member card
   const [team, setTeam] = useState(teamMembers);
 
   useEffect(() => {
@@ -88,34 +92,21 @@ function MeetTheTeam() {
           `https://api.github.com/users/${team[i].login}`
         );
         developers[i].image = data.avatar_url;
-        developers[i].url = data.html_url;
-        developers[i].location = data.location;
         developers[i].bio = data.bio;
         developers[i].location = data.location;
-
-        // developers[i].name = data.name;
-        // developers[i].login = data.login;
-
-        // developers[i].followers = data.followers;
-        // developers[i].following = data.following;
+        developers[i].url = data.html_url;
       }
       setTeam(developers);
     };
     devInfo();
   }, []);
 
-  //   console.log(team);
-
-  //once the teamState has been set with the data from each teamMember, use a loop in here to create each profile card
   return (
     <>
       <MeetTheTeamGlobal />
-      <Heading>
-        <h2>Meet The Team</h2>
-      </Heading>
+      <Heading>Meet The Team</Heading>
       <GithubCards>
         {team.map((dev) => {
-          //!Why is this index here if it is never used?
           return (
             <SingleCard>
               <Avatar src={dev.image} alt="gitHub avatar" />
@@ -125,8 +116,6 @@ function MeetTheTeam() {
                   <p>Bio: {dev.bio}</p>
                   <p>Username: {dev.login}</p>
                   <p>Location: {dev.location}</p>
-                  {/* <p>Followers: number</p>
-                  <p>Following: number</p> */}
                   <a href={dev.url}>GitHub Profile</a>
                 </UserInfo>
               </ProfileInfo>
@@ -155,3 +144,13 @@ export default MeetTheTeam;
 //   });
 
 //   console.log(teamState);
+
+//array of github usernames to be plugged into the axios call loop
+//!Why is this not able to work for an axios call but an array of objects does?
+// const teamMembers = [
+//   'aprilissy',
+//   'ruizaj13',
+//   'oscfig',
+//   'Plofland',
+//   'emilyr027'
+// ];
