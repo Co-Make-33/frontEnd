@@ -57,6 +57,13 @@ const StyledForm = styled.form`
   }
 `;
 
+const StyledErrors = styled.div`
+  font-size: 0.75rem;
+  color: black;
+  text-align: center;
+  margin-top: 0;
+`;
+
 const initialValues = {
   email: '',
   username: '',
@@ -119,8 +126,8 @@ function Signup() {
 
   //handler to handle changes to input values and pass them up to the inputChange function
   const handleChange = (event) => {
-    const { email, username, password } = event.target;
-    inputChange(email, username, password);
+    const { name, value } = event.target;
+    inputChange(name, value);
   };
 
   useEffect(() => {
@@ -141,23 +148,22 @@ function Signup() {
             placeholder="Email"
             onChange={handleChange}
           ></input>
+          <StyledErrors>{formErrors.email}</StyledErrors>
           <input
             type="text"
             name="username"
             placeholder="Username"
             onChange={handleChange}
           ></input>
+          <StyledErrors>{formErrors.username}</StyledErrors>
           <input
             type="password"
             name="password"
             placeholder="Password"
             onChange={handleChange}
           ></input>
-          <input
-            type="submit"
-            disabled={disabled}
-            // onChange={handleChange}
-          ></input>
+          <StyledErrors>{formErrors.password}</StyledErrors>
+          <input type="submit" disabled={disabled}></input>
           <Link to="/Login">
             <p>Already have an account?</p>
           </Link>
@@ -181,4 +187,10 @@ export default Signup;
 //     .catch((error) => {
 //       console.log(error);
 //     });
+// };
+
+// ___👻CODING GRAVEYARD👻___
+// const handleChange = (event) => {
+//   const { email, username, password } = event.target;
+//   inputChange(email, username, password);
 // };

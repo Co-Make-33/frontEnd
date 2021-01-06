@@ -11,7 +11,7 @@ export default yup.object().shape({
     .required('Please enter a password')
     .matches(
       /(^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])?)/,
-      'Password must use at least one uppercase letter and '
+      'Password must use at least one uppercase letter and one number'
     )
     .min(4, 'Password must be at least 4 characters long')
 });
