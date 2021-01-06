@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
 
@@ -81,17 +81,19 @@ const initialUser = [];
 const initialDisabled = true;
 
 function Signup() {
+  // const { push } = useHistory(); ?What is this? (found in AfricanMarket)
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(initialErrors);
-  const [user, setUser] = useState(initialUser);
+  const [user, setUser] = useState(initialUser); //*AfricanMarket uses something different -> (useHistory())
   const [disabled, setDisabled] = useState(initialDisabled);
 
   //submit function to keep the page from refreshing (event.preventDefault();) and to pass on the formValues (to the backend) when the state is set by clicking the submit button
   const onSubmit = (event) => {
+    console.log('Submit button clicked!');
     event.preventDefault();
     const newUser = {
-      email: formValues.email.trim(),
-      username: formValues.name.trim(),
+      email: formValues.email, //Why does this not like trim? (formValues.email.trim()) //!ADD this back in once disabled is working
+      username: formValues.username, //Why does this not like trim? (formValues.username.trim())
       password: formValues.password
     };
     //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. //TODOThen next function should post the data to the backend and then set the state back to it's initial values.
@@ -136,6 +138,19 @@ function Signup() {
     });
   }, [formValues]);
 
+  //AfricanMarket setDisabled() code
+  // useEffect(() => {
+  //   let update = true;
+  //   SignupSchema.isValid(formValues).then((valid) => {
+  //     if (update) {
+  //       setDisabled(!valid);
+  //     }
+  //   });
+  //   return () => {
+  //     update = false;
+  //   };
+  // }, [formValues]);
+
   return (
     <>
       <SignUpGlobal />
@@ -145,6 +160,7 @@ function Signup() {
           <input
             type="email"
             name="email"
+            value={formValues.value}
             placeholder="Email"
             onChange={handleChange}
           ></input>
@@ -152,6 +168,7 @@ function Signup() {
           <input
             type="text"
             name="username"
+            value={formValues.value}
             placeholder="Username"
             onChange={handleChange}
           ></input>
@@ -159,11 +176,15 @@ function Signup() {
           <input
             type="password"
             name="password"
+            value={formValues.value}
             placeholder="Password"
             onChange={handleChange}
           ></input>
           <StyledErrors>{formErrors.password}</StyledErrors>
           <input type="submit" disabled={disabled}></input>
+          {/* <button type="submit" disabled={disabled}>
+            Submit
+          </button> */}
           <Link to="/Login">
             <p>Already have an account?</p>
           </Link>
