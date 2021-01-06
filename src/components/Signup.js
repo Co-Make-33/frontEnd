@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const StyledSignUp = styled.div`
+const styledSignUp = styled.div`
   display: flex;
   margin: 0 auto;
   width: 50%;
@@ -48,7 +48,7 @@ function Signup() {
   // }
 
   return (
-    <StyledSignUp>
+    <styledSignUp>
       <form onSubmit={onSubmit}>
         <input type="email" name="email" placeholder="Email"></input>
         <input type="text" name="username" placeholder="Username"></input>
@@ -59,7 +59,7 @@ function Signup() {
           // onChange={handleChange}
         ></input>
       </form>
-    </StyledSignUp>
+    </styledSignUp>
   );
 }
 
