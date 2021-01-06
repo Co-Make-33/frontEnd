@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
+import SignupSchema from '../Validation/SignupSchema';
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -55,14 +56,53 @@ const StyledForm = styled.form`
   }
 `;
 
+const initialValues = {
+  email: '',
+  username: '',
+  password: ''
+};
+
 function Signup() {
+  const [formValues, setFormValues] = useState(initialValues);
+  const [user, setUser] = useState(initialValues);
+
+  //submit function to keep the page from refreshing (event.preventDefault();) and to pass on the formValues (to the backend) when the state is set by clicking the submit button
   const onSubmit = (event) => {
     event.preventDefault();
+    const newUser = {
+      email: formValues.email.trim(),
+      username: formValues.name.trim(),
+      password: formValues.password
+    };
+    //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. Then next function should post the data to the backend and then set the state back to it's initial values.
+    // postNewUser()
+    //-or-
+    // can't I just set the state of a user, so that it can be passed on to the backend as a state rather than using another function?
+    setUser(newUser);
   };
 
-  // const handleChange = (event) =>{
-  //   const { name }
-  // }
+  //function that runs each time a character is typed into the input and then validates the value of each input with the SignupSchema
+  const inputChange = (name, value) => {
+    yup
+      .reach(SignupSchema, name)
+      .validate(value)
+      .then(() => {
+        //what goes here? Set the state for form errors? (see User-Onboarding)
+      })
+      .catch(() => {
+        //rly? what goes here? Set the state for form errors?
+      });
+    setFormValues({
+      ...formValues,
+      [name]: formValues
+    });
+  };
+
+  //handler to handle changes to input values and pass them up to the inputChange function
+  const handleChange = (event) => {
+    const { email, username, password } = event.target;
+    inputChange(email, username, password);
+  };
 
   return (
     <>
@@ -70,9 +110,24 @@ function Signup() {
       <Heading>Sign Up</Heading>
       <StyledSignUp>
         <StyledForm onSubmit={onSubmit}>
-          <input type="email" name="email" placeholder="Email"></input>
-          <input type="text" name="username" placeholder="Username"></input>
-          <input type="password" placeholder="Password"></input>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+          ></input>
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={handleChange}
+          ></input>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+          ></input>
           <input
             type="submit"
             // disabled={disabled}
