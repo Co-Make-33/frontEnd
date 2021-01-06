@@ -6,7 +6,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 const LoginPage = createGlobalStyle`
 * {
-    /* color: white; */
+     color: white; 
 };
 body {
     background-color: #242943
@@ -17,6 +17,7 @@ const FormStyle = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 3%;
 `
 const LabelStyle = styled.form`
     margin:1%;
@@ -43,7 +44,17 @@ const ButtonStyle = styled.button`
             cursor: pointer;
         }
 `
-
+const InputStyle = styled.input`
+    color: black;
+    display: block;
+    box-sizing:border-box;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid white;
+    padding: 10px 4%;
+    font-size:14px;
+    margin: 5px;
+`
 
 const initialFormValues = {
     credentials: {
@@ -93,20 +104,22 @@ const Login = () => {
 
         <FormStyle onSubmit={handleSubmit}>
             <LabelStyle>Username<br/>
-                <input
+                <InputStyle
                 value={formData.credentials.username}
                 onChange={handleChange}
                 name='username'
                 type='text'
+                placeholder='Username'
                 />
             </LabelStyle>
 
             <LabelStyle>Password<br/>
-                <input
+                <InputStyle
                 value={formData.credentials.password}
                 onChange={handleChange}
                 name='password'
                 type='password'
+                placeholder='Password'
                 />
             </LabelStyle>
             

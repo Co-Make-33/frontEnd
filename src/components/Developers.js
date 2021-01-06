@@ -39,22 +39,41 @@ const ImageStyle = styled.img`
     border-radius: 50%;
     max-width:90%;
 `
-
+const team = [
+    {name: 'April Ashby', gitID:'aprilissy'},
+    {name: 'Juan Ruiz', gitID: 'ruizaj13'},
+    {name: 'Emily Ryan', gitID: 'emilyr027'},
+    {name: 'Peter Lofland', gitID: 'Plofland'},
+    {name: 'Oscar Figueroa', gitID: 'OscFig'},
+]
 
 const Developers = () => {
 
-    const [ developers, setDevelopers ] = useState([])
+    const [ developers, setDevelopers ] = useState(team)
+
+    // useEffect(() => {
+    //     axios.get('https://rickandmortyapi.com/api/character')
+    //     .then(resolve => {
+    //       // console.log(resolve.data.results,'Resolve')
+    //       setDevelopers(resolve.data.results)
+    //     })
+    //     .catch(err => {
+    //       console.log('axios failed in Login')
+    //     })
+    //   }, [])
 
     useEffect(() => {
-        axios.get('https://rickandmortyapi.com/api/character')
-        .then(resolve => {
-          // console.log(resolve.data.results,'Resolve')
-          setDevelopers(resolve.data.results)
-        })
-        .catch(err => {
-          console.log('axios failed in Login')
-        })
-      }, [])
+        const developerInfo = async function(){
+            const members = [...developers]
+            for( let i = 0; i < developers.length; i++){
+                const {data} = await axios.get(`https://api.github.com/users/${developers[i].gitID}`)
+                members[i].image = data.avatar_url
+                members[i].url = data.html_url
+            }
+            setDevelopers(members);
+        }
+        developerInfo()
+    }, [])
     
     return (
         <div className='developer-wrapper'>
