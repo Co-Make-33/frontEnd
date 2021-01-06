@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -27,7 +28,7 @@ const StyledSignUp = styled.div`
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: end;
+
   width: 70%;
   margin: 10% auto;
   background-color: #8d82c4;
@@ -42,6 +43,15 @@ const StyledForm = styled.form`
   input {
     margin: 4% auto;
     width: 80%;
+    color: black;
+    border: 1px solid black;
+  }
+
+  p {
+    color: black;
+    margin: 0;
+    text-align: center;
+    font-size: 0.8rem;
   }
 `;
 
@@ -68,6 +78,9 @@ function Signup() {
             // disabled={disabled}
             // onChange={handleChange}
           ></input>
+          <Link to="/Login">
+            <p>Already have an account?</p>
+          </Link>
         </StyledForm>
       </StyledSignUp>
     </>
