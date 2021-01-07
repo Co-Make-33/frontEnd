@@ -1,8 +1,10 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
 import {AuthContext} from '../contexts/AuthContext';
 import styled, { createGlobalStyle } from 'styled-components';
+import LoginSchema from '../Validation/LoginSchema';
+import * as yup from 'yup';
 
 const LoginPage = createGlobalStyle`
 * {
@@ -23,9 +25,8 @@ const LabelStyle = styled.form`
     margin:1%;
 `
 const LoginTxtDiv = styled.div`
-    width:40%;
-    display: flex;
-    justify-content: flex-end;
+    width:90%;
+    text-align: center;
 `
 const H3style = styled.div`
     font-size: 2em;
@@ -65,18 +66,33 @@ const initialFormValues = {
 
 const initialFormErrors = {
     username:'',
-    email:'',
-}
+    password:'',
+};
+const initialBttnState = true;
 
 const Login = () => {
-    const {setAuthorized} = useContext(AuthContext)
-    const [formData, setFormData] = useState(initialFormValues)
+    const {setAuthorized} = useContext(AuthContext);
+    const [formData, setFormData] = useState(initialFormValues);
+    const [formErrors, setFormErrors] = useState(initialFormErrors);
+    const [bttnDisable, setBttnDisable] = useState(initialBttnState);
     const {push} = useHistory()
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setFormData({
             credentials: {...formData.credentials, [e.target.name]: e.target.value}
         })
+        errorMessage(name, value)
+    }
+
+    const errorMessage = (name, value) => {
+        yup.reach(LoginSchema, name).validate(value)
+            .then(() => {
+                setFormErrors({...formErrors, [name]: ''})
+            })
+            .catch((error) => {
+                setFormErrors({...formErrors, [name]: error.errors[0]})
+            })
     }
 
     const handleSubmit = (e) => {
@@ -94,6 +110,13 @@ const Login = () => {
             })
     }
 
+    useEffect(() => {
+        LoginSchema.isValid(formData)
+          .then((valid) => {
+            setBttnDisable(!valid);
+        });
+      }, [formData]);
+
     return (
 <>
     <LoginPage />
@@ -102,14 +125,13 @@ const Login = () => {
             <H3style>Login</H3style>
         </LoginTxtDiv>
 
-        <FormStyle onSubmit={handleSubmit}>
+        <FormStyle className='inputWrapper' onSubmit={handleSubmit}>
             <LabelStyle>Username<br/>
                 <InputStyle
                 value={formData.credentials.username}
                 onChange={handleChange}
                 name='username'
                 type='text'
-                placeholder='Username'
                 />
             </LabelStyle>
 
@@ -119,12 +141,16 @@ const Login = () => {
                 onChange={handleChange}
                 name='password'
                 type='password'
-                placeholder='Password'
                 />
             </LabelStyle>
             
             <div className='login-button'>
-                <ButtonStyle>Login</ButtonStyle>
+                <ButtonStyle disabled={bttnDisable}>Login</ButtonStyle>
+            </div>
+
+            <div className='errors'>
+                <p>{formErrors.email}</p>
+                <p>{formErrors.username}</p>
             </div>
         </FormStyle>
     </div>
