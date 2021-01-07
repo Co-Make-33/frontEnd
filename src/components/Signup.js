@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
 
+
 const SignUpGlobal = createGlobalStyle`
 * {
     color:white;

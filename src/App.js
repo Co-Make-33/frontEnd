@@ -5,6 +5,8 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import jwt_decode from "jwt-decode"
+
 
 import Home from './components/Home';
 import Nav from './components/Nav';
@@ -12,24 +14,28 @@ import Developers from './components/Developers';
 import MeetTheTeam from './components/MeetTheTeam';
 import Signup from './components/Signup';
 import Login from './components/Login';
+import MyProfile from './components/MyProfile';
 
 import PrivateRoute from './utils/PrivateRoute';
 import IssuesPage from './components/IssuesPage';
 import CreateProfile from './components/CreateProfile';
 
-import {AuthContext} from './contexts/AuthContext'
+import {AuthContext} from './contexts/AuthContext';
+import {UserContext} from './contexts/UserContext';
 
 export const LoginContext = createContext();
 
 function App() {
 
   const [authorized, setAuthorized] = useState(sessionStorage.getItem('authState'))
-
+  const [userInfo, setUserInfo] = useState( sessionStorage.getItem('token') ? jwt_decode(sessionStorage.getItem('token')) : {})
+  console.log(userInfo.subject)
   return (
     <div>
       <Router>
         <AuthContext.Provider value = {{authorized, setAuthorized}}>
         <Nav />
+        <UserContext.Provider value = {{userInfo}}>
         <Route exact path="/">
           <Redirect to={{ pathname: '/home' }} />
         </Route>
@@ -39,7 +45,9 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <PrivateRoute path="/issues" component={IssuesPage} />
+        <PrivateRoute path='/myprofile' component={MyProfile}/>
         <Route path="/createprofile" component={CreateProfile} />
+        </UserContext.Provider>
         </AuthContext.Provider>
       </Router>
     </div>

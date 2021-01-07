@@ -21,7 +21,6 @@ const StyledForm = styled.div`
     }
 `
 
-
 const CreateProfile = () => {
     const [profileData, setProfileData] = useState(initialFormState)
 
