@@ -5,7 +5,6 @@ import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
 import axios from 'axios';
 
-
 const SignUpGlobal = createGlobalStyle`
 * {
     color:white;
@@ -25,16 +24,17 @@ const Heading = styled.h2`
 
 const StyledSignUp = styled.div`
   display: flex;
+  justify-content: center;
   margin: 0 auto;
-  width: 60%;
+  width: 80%;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-
-  width: 70%;
-  margin: 10% auto;
+  align-items: center;
+  width: 40%;
+  margin: 5% auto;
   background-color: #8d82c4;
   border-radius: 10px;
   box-shadow: 
@@ -48,14 +48,38 @@ const StyledForm = styled.form`
     margin: 4% auto;
     width: 80%;
     color: black;
-    border: 1px solid black;
+    border: 1px solid mintcream;
+    border-radius: 2px;
   }
 
   p {
     color: black;
-    margin: 0;
+    margin: 0 auto;
     text-align: center;
+    padding: 1%;
     font-size: 0.8rem;
+    width: 100%;
+  }
+
+  .submitBtn {
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: 1px solid slategray;
+    cursor: pointer;
+    box-shadow: darkslategray 3px 0px 5px, darkslategray 0px 3px 5px;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  @media (max-width: 800px) and (min-width: 501px) {
+    width: 80%;
+  }
+
+  @media (max-width: 1000px) and (min-width: 801) {
+    width: 60%;
+    margin: 10%;
   }
 `;
 
@@ -134,6 +158,10 @@ function Signup() {
     });
   }, [formValues]);
 
+  const homeRedirect = (event) => {
+    window.location.href = 'Home';
+  };
+
   return (
     <>
       <SignUpGlobal />
@@ -164,10 +192,15 @@ function Signup() {
             onChange={handleChange}
           ></input>
           <StyledErrors>{formErrors.password}</StyledErrors>
-          <input type="submit" disabled={disabled}></input>
-          {/* <button type="submit" disabled={disabled}>
-            Submit
-          </button> */}
+          <input
+            className="submitBtn"
+            type="submit"
+            disabled={disabled}
+            style={{
+              backgroundColor: disabled ? '#EC8D81' : '#b9c482',
+              color: disabled ? 'darkslategray' : 'black'
+            }}
+          ></input>
           <Link to="/Login">
             <p>Already have an account?</p>
           </Link>
