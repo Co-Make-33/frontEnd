@@ -62,6 +62,10 @@ const StyledForm = styled.form`
 
   .submitBtn {
     font-size: 1.1rem;
+    font-weight: bold;
+    border: 1px solid slategray;
+    cursor: pointer;
+    box-shadow: darkslategray 3px 0px 5px, darkslategray 0px 3px 5px;
   }
 
   @media (max-width: 500px) {
@@ -113,7 +117,10 @@ function Signup() {
       username: formValues.username.trim(),
       password: formValues.password
     };
+
     //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
+
+    homeRedirect();
   };
 
   const inputChange = (name, value) => {
@@ -149,6 +156,10 @@ function Signup() {
     });
   }, [formValues]);
 
+  const homeRedirect = (event) => {
+    window.location.href = 'Home';
+  };
+
   return (
     <>
       <SignUpGlobal />
@@ -183,11 +194,11 @@ function Signup() {
             className="submitBtn"
             type="submit"
             disabled={disabled}
-            // style={{ backgroundColor: disabled ? '#8D82C4' : '#EC8D81' }}
+            style={{
+              backgroundColor: disabled ? '#EC8D81' : '#b9c482',
+              color: disabled ? 'darkslategray' : 'black'
+            }}
           ></input>
-          {/* <button type="submit" disabled={disabled}>
-            Submit
-          </button> */}
           <Link to="/Login">
             <p>Already have an account?</p>
           </Link>
