@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
+import * as yup from 'yup'; 
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -71,7 +72,7 @@ function Signup() {
     event.preventDefault();
     const newUser = {
       email: formValues.email.trim(),
-      username: formValues.name.trim(),
+      username: formValues.username.trim(),
       password: formValues.password
     };
     //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. Then next function should post the data to the backend and then set the state back to it's initial values.

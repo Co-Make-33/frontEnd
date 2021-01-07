@@ -37,7 +37,7 @@ function Nav(props) {
           <Link to="/home">Home</Link>
           <Link to="/meettheteam">Meet the Team</Link>
           <Link to="/developers">Developers</Link>
-          {authorized ? <Link>Profile</Link> : <></>}
+          {authorized ? <Link to='/myprofile'>Profile</Link> : <></>}
           {authorized ? <Link to='/issues'>Community Issues</Link> : <></>}
           {authorized ?  <Link onClick={handleClick}>Logout</Link> : <Link to="/login">Login</Link>}
           {authorized ? <></> : <Link to="/signup">Sign Up</Link>}
