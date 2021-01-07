@@ -44,7 +44,6 @@ const SingleCard = styled.div`
     /* bottom */ rgba(255, 255, 255, 0.15) 0px 6px 10px,
     /* left */ rgba(255, 255, 255, 0.15) -6px 0px 10px;
   border: 2px solid mintcream;
-  /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
 
   @media (max-width: 800px) {
     width: 75%;
@@ -86,8 +85,7 @@ function MeetTheTeam() {
   useEffect(() => {
     const devInfo = async () => {
       const developers = [...team];
-      //TODO:condense this for loop down to a for(i in team), will it work?
-      for (let i = 0; i < team.length; i++) {
+      for (let i in team) {
         const { data } = await axios.get(
           `https://api.github.com/users/${team[i].login}`
         );
@@ -129,6 +127,7 @@ function MeetTheTeam() {
 
 export default MeetTheTeam;
 
+// FOR THE NEXT UNIT2 DEVELOPERS
 // ___👻CODING GRAVE YARD👻___
 //loop over the teamMembers array, use the axios call to set the state by adding the data object to the teamState array
 //   teamMembers.forEach((eachMember) => {
