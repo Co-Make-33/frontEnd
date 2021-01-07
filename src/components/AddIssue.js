@@ -31,6 +31,9 @@ const AddIssue = () => {
     const [newIssueValues, setNewIssueValues] = useState([]);
     const [issues, setIssues] = useContext(IssuesContext);
     
+    const redirect = e => {
+      window.location.href = 'Issues';
+    }
 
     const onSubmit = e => {
         e.preventDefault();
@@ -39,8 +42,8 @@ const AddIssue = () => {
         .then((res) => {
             console.log(res)
             setIssues(userIssues => [...userIssues, {title: issues.title, description: issues.description} ])
-            push('/issues')
-        })
+            redirect()
+          })
         .catch((err) => {
             console.log(err)
         })
