@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
+import axios from 'axios';
 
 
 const SignUpGlobal = createGlobalStyle`
@@ -66,9 +67,11 @@ const StyledErrors = styled.div`
 `;
 
 const initialValues = {
-  email: '',
-  username: '',
-  password: ''
+  credentials: {
+    email: '',
+    username: '',
+    password: ''
+  }
 };
 
 const initialErrors = {
@@ -88,11 +91,22 @@ function Signup() {
   const onSubmit = (event) => {
     console.log('Submit button clicked!');
     event.preventDefault();
-    const newUser = {
-      email: formValues.email.trim(),
-      username: formValues.username.trim(),
-      password: formValues.password
-    };
+    // const newUser = {
+    //   email: formValues.email.trim(),
+    //   username: formValues.username.trim(),
+    //   password: formValues.password
+    // };
+    console.log(formValues.credentials)
+    axios 
+      .post('https://co-make-33.herokuapp.com/api/login', formValues.credentials)
+      .then( res => {
+        console.log(res.data)
+        sessionStorage.setItem('token', res.data.token)
+
+      })
+      .catch( err => {
+        console.log(err)
+      })
     //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
   };
 
@@ -112,19 +126,20 @@ function Signup() {
           [name]: err.errors[0]
         });
       });
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
+
+    // });
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setFormValues({
+      credentials: {...formValues.credentials, [event.target.name]: event.target.value}
+    })
     inputChange(name, value);
   };
 
   useEffect(() => {
-    SignupSchema.isValid(formValues).then((valid) => {
+    SignupSchema.isValid(formValues.credentials).then((valid) => {
       setDisabled(!valid);
     });
   }, [formValues]);
