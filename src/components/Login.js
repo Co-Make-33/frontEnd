@@ -97,7 +97,6 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData.credentials)
         axios
             .post(' https://co-make-33.herokuapp.com/api/login', formData.credentials)
             .then( res => {
@@ -112,7 +111,7 @@ const Login = () => {
     }
 
     useEffect(() => {
-        LoginSchema.isValid(formData)
+        LoginSchema.isValid(formData.credentials)
           .then((valid) => {
             setBttnDisable(!valid);
         });
