@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
-
+import * as yup from 'yup';
 const SignUpGlobal = createGlobalStyle`
 * {
     color:white;

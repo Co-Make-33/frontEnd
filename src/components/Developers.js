@@ -17,6 +17,7 @@ const H1Style = styled.h1`
     margin: 4%;
     padding: 4px;
     letter-spacing: 2px;
+    text-align: center;
 `
 const DeveloperDiv = styled.div`
     display: flex;
@@ -39,6 +40,7 @@ const ImageStyle = styled.img`
     border-radius: 50%;
     max-width:90%;
 `
+
 const team = [
     {name: 'April Ashby', gitID:'aprilissy'},
     {name: 'Juan Ruiz', gitID: 'ruizaj13'},
