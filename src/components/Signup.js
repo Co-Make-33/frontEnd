@@ -3,6 +3,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -90,9 +91,11 @@ const StyledErrors = styled.div`
 `;
 
 const initialValues = {
-  email: '',
-  username: '',
-  password: ''
+  credentials: {
+    email: '',
+    username: '',
+    password: ''
+  }
 };
 
 const initialErrors = {
@@ -110,17 +113,16 @@ function Signup() {
   const [disabled, setDisabled] = useState(initialDisabled);
 
   const onSubmit = (event) => {
-    console.log('Submit button clicked!');
     event.preventDefault();
-    const newUser = {
-      email: formValues.email.trim(),
-      username: formValues.username.trim(),
-      password: formValues.password
-    };
+    axios 
+      .post('https://co-make-33.herokuapp.com/api/register', formValues.credentials)
+      .then( res => {
+        push('/login')
 
-    //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
-
-    homeRedirect();
+      })
+      .catch( err => {
+        console.log(err)
+      })
   };
 
   const inputChange = (name, value) => {
@@ -139,19 +141,19 @@ function Signup() {
           [name]: err.errors[0]
         });
       });
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
+
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setFormValues({
+      credentials: {...formValues.credentials, [event.target.name]: event.target.value}
+    })
     inputChange(name, value);
   };
 
   useEffect(() => {
-    SignupSchema.isValid(formValues).then((valid) => {
+    SignupSchema.isValid(formValues.credentials).then((valid) => {
       setDisabled(!valid);
     });
   }, [formValues]);
@@ -169,7 +171,7 @@ function Signup() {
           <input
             type="email"
             name="email"
-            value={formValues.value}
+            value={formValues.credentials.email}
             placeholder="Email"
             onChange={handleChange}
           ></input>
@@ -177,7 +179,7 @@ function Signup() {
           <input
             type="text"
             name="username"
-            value={formValues.value}
+            value={formValues.credentials.username}
             placeholder="Username"
             onChange={handleChange}
           ></input>
@@ -185,7 +187,7 @@ function Signup() {
           <input
             type="password"
             name="password"
-            value={formValues.value}
+            value={formValues.credentials.password}
             placeholder="Password"
             onChange={handleChange}
           ></input>
@@ -234,3 +236,9 @@ export default Signup;
 // };
 //
 // const [user, setUser] = useState(initialUser);
+
+ // const newUser = {
+    //   email: formValues.email.trim(),
+    //   username: formValues.username.trim(),
+    //   password: formValues.password
+    // };

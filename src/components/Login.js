@@ -111,7 +111,7 @@ const Login = () => {
     }
 
     useEffect(() => {
-        LoginSchema.isValid(formData)
+        LoginSchema.isValid(formData.credentials)
           .then((valid) => {
             setBttnDisable(!valid);
         });
