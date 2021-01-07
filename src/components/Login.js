@@ -20,20 +20,23 @@ const FormStyle = styled.form`
     justify-content: center;
     align-items: center;
     margin: 3%;
+    .errors p {
+        color:red;
+    }
 `
 const LabelStyle = styled.form`
     margin:1%;
 `
 const LoginTxtDiv = styled.div`
-    width:90%;
     text-align: center;
 `
-const H3style = styled.div`
+const H3style = styled.h3`
     font-size: 2em;
     border-bottom: 2px solid white;
     margin: 4%;
     padding: 4px;
     letter-spacing: 2px;
+    text-align: center;
 `
 const ButtonStyle = styled.button`
     background-color: #242943;
@@ -149,8 +152,8 @@ const Login = () => {
             </div>
 
             <div className='errors'>
-                <p>{formErrors.email}</p>
                 <p>{formErrors.username}</p>
+                <p>{formErrors.password}</p>
             </div>
         </FormStyle>
     </div>

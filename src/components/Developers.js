@@ -38,7 +38,7 @@ const DeveloperName = styled.div`
 `
 const ImageStyle = styled.img`
     border-radius: 50%;
-    max-width:90%;
+    max-width:80%;
 `
 
 const team = [
