@@ -89,25 +89,16 @@ function Signup() {
   const [disabled, setDisabled] = useState(initialDisabled);
 
   const onSubmit = (event) => {
-    console.log('Submit button clicked!');
     event.preventDefault();
-    // const newUser = {
-    //   email: formValues.email.trim(),
-    //   username: formValues.username.trim(),
-    //   password: formValues.password
-    // };
-    console.log(formValues.credentials)
     axios 
-      .post('https://co-make-33.herokuapp.com/api/login', formValues.credentials)
+      .post('https://co-make-33.herokuapp.com/api/register', formValues.credentials)
       .then( res => {
-        console.log(res.data)
-        sessionStorage.setItem('token', res.data.token)
+        push('/login')
 
       })
       .catch( err => {
         console.log(err)
       })
-    //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
   };
 
   const inputChange = (name, value) => {
@@ -127,7 +118,6 @@ function Signup() {
         });
       });
 
-    // });
   };
 
   const handleChange = (event) => {
@@ -153,7 +143,7 @@ function Signup() {
           <input
             type="email"
             name="email"
-            value={formValues.value}
+            value={formValues.credentials.email}
             placeholder="Email"
             onChange={handleChange}
           ></input>
@@ -161,7 +151,7 @@ function Signup() {
           <input
             type="text"
             name="username"
-            value={formValues.value}
+            value={formValues.credentials.username}
             placeholder="Username"
             onChange={handleChange}
           ></input>
@@ -169,7 +159,7 @@ function Signup() {
           <input
             type="password"
             name="password"
-            value={formValues.value}
+            value={formValues.credentials.password}
             placeholder="Password"
             onChange={handleChange}
           ></input>
@@ -213,3 +203,9 @@ export default Signup;
 // };
 //
 // const [user, setUser] = useState(initialUser);
+
+ // const newUser = {
+    //   email: formValues.email.trim(),
+    //   username: formValues.username.trim(),
+    //   password: formValues.password
+    // };
