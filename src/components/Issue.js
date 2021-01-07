@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Issue = ({ name, description }) => {
+const Issue = ({ title, description }) => {
  
 
     return (
         <div>
-        <h3>{name}</h3>
+        <h3>{title}</h3>
         <p>{description}</p>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import IssuesList from './IssuesList';
 import {IssueProvider} from '../contexts/IssuesContext';
-import AddIssue from './AddIssue';
+import AddIssue from "./AddIssue";
 
 
 

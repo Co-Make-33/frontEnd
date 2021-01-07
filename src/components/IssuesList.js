@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import Issue from './Issue';
 import {IssuesContext} from '../contexts/IssuesContext';
+// import AddIssue from './AddIssue';
 
 const IssuesList = () => {
     const [issues, setIssues] = useContext(IssuesContext);
-    // const [issuesList, setIssuesList] = useState([]);
 
   useEffect(() => {
     getIssues();    
@@ -13,9 +13,9 @@ const IssuesList = () => {
 
   const getIssues = () => {
     axiosWithAuth()
-      .get('/api/users/issues')
-      .then(response => {
-        setIssues(response.data)
+      .get('/api/issues')
+      .then(res => {
+        setIssues(res.data)
       })
       .catch(err => console.log(err))
   }
@@ -23,9 +23,10 @@ const IssuesList = () => {
     return (
         <div>
         {issues.map(issue => (
-            <Issue name={issue.name} description={issue.description} key={issue.id}/>
+            <Issue title={issue.title} description={issue.description} key={issue.id}/>
         ))}
         </div>
+  
     );
 }
 
