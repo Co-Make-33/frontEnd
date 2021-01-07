@@ -34,7 +34,7 @@ const StyledForm = styled.form`
   width: 70%;
   margin: 10% auto;
   background-color: #8d82c4;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 
     /* top */ rgba(255, 255, 255, 0.15) 0px -6px 10px,
     /* right */ rgba(255, 255, 255, 0.15) 6px 0px 10px,
@@ -76,34 +76,25 @@ const initialErrors = {
   password: ''
 };
 
-const initialUser = [];
-
 const initialDisabled = true;
 
 function Signup() {
-  // const { push } = useHistory(); ?What is this? (found in AfricanMarket)
+  const { push } = useHistory();
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState(initialErrors);
-  const [user, setUser] = useState(initialUser); //*AfricanMarket uses something different -> (useHistory())
   const [disabled, setDisabled] = useState(initialDisabled);
 
-  //submit function to keep the page from refreshing (event.preventDefault();) and to pass on the formValues (to the backend) when the state is set by clicking the submit button
   const onSubmit = (event) => {
     console.log('Submit button clicked!');
     event.preventDefault();
     const newUser = {
-      email: formValues.email, //Why does this not like trim? (formValues.email.trim()) //!ADD this back in once disabled is working
-      username: formValues.username, //Why does this not like trim? (formValues.username.trim())
+      email: formValues.email.trim(),
+      username: formValues.username.trim(),
       password: formValues.password
     };
-    //After the form data is valid, it is packaged up into the newUser variable and passed on to the next function. //TODOThen next function should post the data to the backend and then set the state back to it's initial values.
-    // postNewUser()
-    //-or-
-    // can't I just set the state of a user, so that it can be passed on to the backend as a state rather than using another function?
-    setUser(newUser);
+    //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
   };
 
-  //function that runs each time a character is typed into the input and then validates the value of each input with the SignupSchema
   const inputChange = (name, value) => {
     yup
       .reach(SignupSchema, name)
@@ -122,11 +113,10 @@ function Signup() {
       });
     setFormValues({
       ...formValues,
-      [name]: formValues
+      [name]: value
     });
   };
 
-  //handler to handle changes to input values and pass them up to the inputChange function
   const handleChange = (event) => {
     const { name, value } = event.target;
     inputChange(name, value);
@@ -137,19 +127,6 @@ function Signup() {
       setDisabled(!valid);
     });
   }, [formValues]);
-
-  //AfricanMarket setDisabled() code
-  // useEffect(() => {
-  //   let update = true;
-  //   SignupSchema.isValid(formValues).then((valid) => {
-  //     if (update) {
-  //       setDisabled(!valid);
-  //     }
-  //   });
-  //   return () => {
-  //     update = false;
-  //   };
-  // }, [formValues]);
 
   return (
     <>
@@ -196,6 +173,8 @@ function Signup() {
 
 export default Signup;
 
+//
+//
 //?Ask about how this user information gets passed to the backend
 //This is how I have posted user info with an API in the past, does it work kinda like this?
 // const postNewUser = (newUser) => {
@@ -211,7 +190,10 @@ export default Signup;
 // };
 
 // ___👻CODING GRAVEYARD👻___
+//
 // const handleChange = (event) => {
 //   const { email, username, password } = event.target;
 //   inputChange(email, username, password);
 // };
+//
+// const [user, setUser] = useState(initialUser);
