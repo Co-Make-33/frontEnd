@@ -38,7 +38,7 @@ const DeveloperName = styled.div`
 `
 const ImageStyle = styled.img`
     border-radius: 50%;
-    max-width:90%;
+    max-width:80%;
 `
 
 const team = [
@@ -88,7 +88,9 @@ const Developers = () => {
                     return (
                     <DeveloperName className='DevName-img'>
                         <p>{developer.name}</p>
-                        <ImageStyle src={developer.image} alt=''/>
+                        <a href={developer.url} target='_blank'>
+                        <ImageStyle src={developer.image} alt='Link'/>
+                        </a>
                     </DeveloperName>)
                 })}
             </DeveloperDiv>
