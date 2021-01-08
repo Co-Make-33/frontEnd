@@ -2,7 +2,7 @@ import React, {useEffect, useContext, useState} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import {UserContext} from '../contexts/UserContext';
 import {ProfileIssuesContext} from '../contexts/ProfileIssuesContext';
-
+import Issue from './Issue';
 
 const MyProfile = () => {
     const[crrntUserInfo, setCrrntUserInfo] = useState({})
@@ -49,10 +49,22 @@ const MyProfile = () => {
     }
 
 
+
     return(
-        <div>
-            <h3>{crrntUserInfo.username}</h3>
-            <h4>{crrntUserInfo.email}</h4>
+     <>
+         <h3>{crrntUserInfo.username}</h3>
+         <h4>{crrntUserInfo.email}</h4>
+
+         { userIssues ? 
+                <div>
+                    <h2>My Issues</h2>
+                    <h5>{userIssues.title}</h5>
+                    <p>{userIssues.description} <br/> {userIssues.date_created} <br/> {userIssues.resolved_status} </p> 
+                    <button onClick={handleDelete}>Delete</button>
+                </div> : <p>No Issues</p>}
+        
+     </>
+ )
             { userIssues ? 
                 <div>
                     <h2>My Issues</h2>
@@ -60,8 +72,6 @@ const MyProfile = () => {
                     <p>{userIssues.description} <br/> {userIssues.date_created} <br/> {userIssues.resolved_status} </p> 
                     <button onClick={handleDelete}>Delete</button>
                 </div> : <p>No Issues</p>}
-        </div>
-    )
 
 }
 
