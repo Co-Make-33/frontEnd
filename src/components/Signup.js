@@ -29,13 +29,14 @@ const StyledSignUp = styled.div`
   justify-content: center;
   margin: 0 auto;
   width: 80%;
+  border: 1px solid black;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
+  width: 50%;
   margin: 5% auto;
   background-color: #8d82c4;
   border-radius: 10px;
@@ -52,6 +53,7 @@ const StyledForm = styled.form`
     color: black;
     border: 1px solid mintcream;
     border-radius: 2px;
+    font-size: 1.4rem;
   }
 
   p {
@@ -59,12 +61,12 @@ const StyledForm = styled.form`
     margin: 0 auto;
     text-align: center;
     padding: 1%;
-    font-size: 0.8rem;
     width: 100%;
+    font-size: 1.2rem;
   }
 
   .submitBtn {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: bold;
     border: 1px solid slategray;
     cursor: pointer;
@@ -79,7 +81,7 @@ const StyledForm = styled.form`
     width: 80%;
   }
 
-  @media (max-width: 1000px) and (min-width: 801) {
+  @media (max-width: 1000px) and (min-width: 801px) {
     width: 60%;
     margin: 10%;
   }
@@ -116,15 +118,17 @@ function Signup() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    axios 
-      .post('https://co-make-33.herokuapp.com/api/register', formValues.credentials)
-      .then( res => {
-        push('/login')
-
+    axios
+      .post(
+        'https://co-make-33.herokuapp.com/api/register',
+        formValues.credentials
+      )
+      .then((res) => {
+        push('/login');
       })
-      .catch( err => {
-        console.log(err)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const inputChange = (name, value) => {
@@ -143,14 +147,16 @@ function Signup() {
           [name]: err.errors[0]
         });
       });
-
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({
-      credentials: {...formValues.credentials, [event.target.name]: event.target.value}
-    })
+      credentials: {
+        ...formValues.credentials,
+        [event.target.name]: event.target.value
+      }
+    });
     inputChange(name, value);
   };
 
@@ -239,8 +245,8 @@ export default Signup;
 //
 // const [user, setUser] = useState(initialUser);
 
- // const newUser = {
-    //   email: formValues.email.trim(),
-    //   username: formValues.username.trim(),
-    //   password: formValues.password
-    // };
+// const newUser = {
+//   email: formValues.email.trim(),
+//   username: formValues.username.trim(),
+//   password: formValues.password
+// };
