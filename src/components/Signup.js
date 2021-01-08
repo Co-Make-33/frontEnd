@@ -1,8 +1,11 @@
+//hopefully fixed signup - this line can be deleted
+
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
+import axios from 'axios';
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -32,7 +35,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50%;
+  width: 40%;
   margin: 5% auto;
   background-color: #8d82c4;
   border-radius: 10px;
@@ -49,7 +52,6 @@ const StyledForm = styled.form`
     color: black;
     border: 1px solid mintcream;
     border-radius: 2px;
-    font-size: 1.4rem;
   }
 
   p {
@@ -57,12 +59,12 @@ const StyledForm = styled.form`
     margin: 0 auto;
     text-align: center;
     padding: 1%;
+    font-size: 0.8rem;
     width: 100%;
-    font-size: 1.2rem;
   }
 
   .submitBtn {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: bold;
     border: 1px solid slategray;
     cursor: pointer;
@@ -77,7 +79,7 @@ const StyledForm = styled.form`
     width: 80%;
   }
 
-  @media (max-width: 1000px) and (min-width: 801px) {
+  @media (max-width: 1000px) and (min-width: 801) {
     width: 60%;
     margin: 10%;
   }
@@ -91,9 +93,11 @@ const StyledErrors = styled.div`
 `;
 
 const initialValues = {
-  email: '',
-  username: '',
-  password: ''
+  credentials: {
+    email: '',
+    username: '',
+    password: ''
+  }
 };
 
 const initialErrors = {
@@ -111,17 +115,16 @@ function Signup() {
   const [disabled, setDisabled] = useState(initialDisabled);
 
   const onSubmit = (event) => {
-    console.log('Submit button clicked!');
     event.preventDefault();
-    const newUser = {
-      email: formValues.email.trim(),
-      username: formValues.username.trim(),
-      password: formValues.password
-    };
+    axios 
+      .post('https://co-make-33.herokuapp.com/api/register', formValues.credentials)
+      .then( res => {
+        push('/login')
 
-    //__To Juan__ newUser is where I have the user data stored so it either needs to be called or just get rid of it.
-
-    homeRedirect();
+      })
+      .catch( err => {
+        console.log(err)
+      })
   };
 
   const inputChange = (name, value) => {
@@ -140,19 +143,19 @@ function Signup() {
           [name]: err.errors[0]
         });
       });
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
+
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    setFormValues({
+      credentials: {...formValues.credentials, [event.target.name]: event.target.value}
+    })
     inputChange(name, value);
   };
 
   useEffect(() => {
-    SignupSchema.isValid(formValues).then((valid) => {
+    SignupSchema.isValid(formValues.credentials).then((valid) => {
       setDisabled(!valid);
     });
   }, [formValues]);
@@ -170,7 +173,7 @@ function Signup() {
           <input
             type="email"
             name="email"
-            value={formValues.value}
+            value={formValues.credentials.email}
             placeholder="Email"
             onChange={handleChange}
           ></input>
@@ -178,7 +181,7 @@ function Signup() {
           <input
             type="text"
             name="username"
-            value={formValues.value}
+            value={formValues.credentials.username}
             placeholder="Username"
             onChange={handleChange}
           ></input>
@@ -186,7 +189,7 @@ function Signup() {
           <input
             type="password"
             name="password"
-            value={formValues.value}
+            value={formValues.credentials.password}
             placeholder="Password"
             onChange={handleChange}
           ></input>
@@ -235,3 +238,9 @@ export default Signup;
 // };
 //
 // const [user, setUser] = useState(initialUser);
+
+ // const newUser = {
+    //   email: formValues.email.trim(),
+    //   username: formValues.username.trim(),
+    //   password: formValues.password
+    // };
