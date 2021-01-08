@@ -18,7 +18,6 @@ import MyProfile from './components/MyProfile';
 
 import PrivateRoute from './utils/PrivateRoute';
 import IssuesPage from './components/IssuesPage';
-import CreateProfile from './components/CreateProfile';
 
 import {AuthContext} from './contexts/AuthContext';
 import {UserContext} from './contexts/UserContext';
@@ -27,10 +26,10 @@ import {ProfileIssuesContext} from './contexts/ProfileIssuesContext';
 export const LoginContext = createContext();
 
 function App() {
-  const [userIssues, setUserIssues] = useState([{}])
+  const [userIssues, setUserIssues] = useState([])
   const [authorized, setAuthorized] = useState(sessionStorage.getItem('authState'))
-  const [userInfo, setUserInfo] = useState( sessionStorage.getItem('token') ? jwt_decode(sessionStorage.getItem('token')) : {})
-  console.log(userInfo)
+  const [userInfo] = useState( sessionStorage.getItem('token') ? jwt_decode(sessionStorage.getItem('token')) : {})
+
   return (
     <div>
       <Router>
@@ -49,7 +48,6 @@ function App() {
         <ProfileIssuesContext.Provider value = {{userIssues, setUserIssues}}>
           <PrivateRoute path='/myprofile' component={MyProfile}/>
         </ProfileIssuesContext.Provider>
-        <Route path="/createprofile" component={CreateProfile} />
         </UserContext.Provider>
         </AuthContext.Provider>
       </Router>

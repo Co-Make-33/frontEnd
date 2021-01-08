@@ -39,7 +39,7 @@ function Nav(props) {
           <Link to="/developers">Developers</Link>
           {authorized ? <Link to='/myprofile'>Profile</Link> : <></>}
           {authorized ? <Link to='/issues'>Community Issues</Link> : <></>}
-          {authorized ?  <Link onClick={handleClick}>Logout</Link> : <Link to="/login">Login</Link>}
+          {authorized ?  <Link onClick={handleClick} to=''>Logout</Link> : <Link to="/login">Login</Link>}
           {authorized ? <></> : <Link to="/signup">Sign Up</Link>}
         </StyledNavUl>
       </StyledNavBar>
