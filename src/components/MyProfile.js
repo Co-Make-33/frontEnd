@@ -2,7 +2,7 @@ import React, {useEffect, useContext, useState} from 'react';
 import axiosWithAuth from '../utils/axiosWithAuth';
 import {UserContext} from '../contexts/UserContext';
 import {ProfileIssuesContext} from '../contexts/ProfileIssuesContext';
-// import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner';
 import styled, {createGlobalStyle} from 'styled-components';
 
 const UserPage = createGlobalStyle`
@@ -79,9 +79,9 @@ const MyProfile = () => {
     },[newIssue])
 
 
-    // if (newIssue == undefined){
-    //     return <Loader type="Puff" color="#204963" height="60" width="60" />
-    // }
+    if (newIssue == undefined){
+        return <Loader type="Puff" color="#204963" height="60" width="60" />
+    }
     
     return(
         <StyledProfile>
