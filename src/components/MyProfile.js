@@ -47,6 +47,7 @@ const StyledList = styled.div`
 
 `
 
+
 const MyProfile = () => {
     const [crrntUserInfo, setCrrntUserInfo] = useState({})
     const {userIssues, setUserIssues} = useContext(ProfileIssuesContext)
@@ -76,6 +77,7 @@ const MyProfile = () => {
                 console.log(err)
             })
     },[newIssue])
+
 
     if (newIssue == undefined){
         return <Loader type="Puff" color="#204963" height="60" width="60" />
@@ -117,6 +119,7 @@ const MyProfile = () => {
             </StyledList>
         </StyledProfile>
     )
+
 
 }
 

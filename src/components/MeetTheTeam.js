@@ -44,17 +44,20 @@ const SingleCard = styled.div`
     /* bottom */ rgba(255, 255, 255, 0.15) 0px 6px 10px,
     /* left */ rgba(255, 255, 255, 0.15) -6px 0px 10px;
   border: 2px solid mintcream;
-  /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 75%;
     justify-content: space-evenly;
+  }
+
+  @media (min-width: 1600px) {
+    width: 30%;
   }
 `;
 
 const Avatar = styled.img`
   width: 33%;
-  margin: 2%;
+  margin: auto 2%;
   border-radius: 50%;
 `;
 
@@ -62,14 +65,23 @@ const ProfileInfo = styled.div`
   width: 75%;
   margin: 2%;
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-top: 0;
+    @media (min-width: 1600px) {
+      font-size: 2rem;
+    }
   }
 `;
 
 const UserInfo = styled.div`
-  font-size: 0.75rem;
-  line-height: 0.5rem;
+  font-size: 1.2rem;
+  @media (max-width: 800px) {
+    font-size: 1rem;
+  }
+  @media (min-width: 1600px) {
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+  }
 `;
 
 const teamMembers = [
@@ -86,8 +98,7 @@ function MeetTheTeam() {
   useEffect(() => {
     const devInfo = async () => {
       const developers = [...team];
-      //TODO:condense this for loop down to a for(i in team), will it work?
-      for (let i = 0; i < team.length; i++) {
+      for (let i in team) {
         const { data } = await axios.get(
           `https://api.github.com/users/${team[i].login}`
         );
@@ -129,6 +140,7 @@ function MeetTheTeam() {
 
 export default MeetTheTeam;
 
+// FOR THE NEXT UNIT2 DEVELOPERS
 // ___👻CODING GRAVE YARD👻___
 //loop over the teamMembers array, use the axios call to set the state by adding the data object to the teamState array
 //   teamMembers.forEach((eachMember) => {

@@ -1,10 +1,11 @@
+//hopefully fixed signup - this line can be deleted
+
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import { Link, useHistory } from 'react-router-dom';
 import SignupSchema from '../Validation/SignupSchema';
 import * as yup from 'yup';
 import axios from 'axios';
-
 
 const SignUpGlobal = createGlobalStyle`
 * {
@@ -25,16 +26,18 @@ const Heading = styled.h2`
 
 const StyledSignUp = styled.div`
   display: flex;
+  justify-content: center;
   margin: 0 auto;
-  width: 60%;
+  width: 80%;
+  border: 1px solid black;
 `;
 
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-
-  width: 70%;
-  margin: 10% auto;
+  align-items: center;
+  width: 50%;
+  margin: 5% auto;
   background-color: #8d82c4;
   border-radius: 10px;
   box-shadow: 
@@ -48,14 +51,39 @@ const StyledForm = styled.form`
     margin: 4% auto;
     width: 80%;
     color: black;
-    border: 1px solid black;
+    border: 1px solid mintcream;
+    border-radius: 2px;
+    font-size: 1.4rem;
   }
 
   p {
     color: black;
-    margin: 0;
+    margin: 0 auto;
     text-align: center;
-    font-size: 0.8rem;
+    padding: 1%;
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .submitBtn {
+    font-size: 1.4rem;
+    font-weight: bold;
+    border: 1px solid slategray;
+    cursor: pointer;
+    box-shadow: darkslategray 3px 0px 5px, darkslategray 0px 3px 5px;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+
+  @media (max-width: 800px) and (min-width: 501px) {
+    width: 80%;
+  }
+
+  @media (max-width: 1000px) and (min-width: 801px) {
+    width: 60%;
+    margin: 10%;
   }
 `;
 
@@ -90,15 +118,17 @@ function Signup() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    axios 
-      .post('https://co-make-33.herokuapp.com/api/register', formValues.credentials)
-      .then( res => {
-        push('/login')
-
+    axios
+      .post(
+        'https://co-make-33.herokuapp.com/api/register',
+        formValues.credentials
+      )
+      .then((res) => {
+        push('/login');
       })
-      .catch( err => {
-        console.log(err)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const inputChange = (name, value) => {
@@ -117,14 +147,16 @@ function Signup() {
           [name]: err.errors[0]
         });
       });
-
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues({
-      credentials: {...formValues.credentials, [event.target.name]: event.target.value}
-    })
+      credentials: {
+        ...formValues.credentials,
+        [event.target.name]: event.target.value
+      }
+    });
     inputChange(name, value);
   };
 
@@ -133,6 +165,10 @@ function Signup() {
       setDisabled(!valid);
     });
   }, [formValues]);
+
+  const homeRedirect = (event) => {
+    window.location.href = 'Home';
+  };
 
   return (
     <>
@@ -164,10 +200,15 @@ function Signup() {
             onChange={handleChange}
           ></input>
           <StyledErrors>{formErrors.password}</StyledErrors>
-          <input type="submit" disabled={disabled}></input>
-          {/* <button type="submit" disabled={disabled}>
-            Submit
-          </button> */}
+          <input
+            className="submitBtn"
+            type="submit"
+            disabled={disabled}
+            style={{
+              backgroundColor: disabled ? '#EC8D81' : '#b9c482',
+              color: disabled ? 'darkslategray' : 'black'
+            }}
+          ></input>
           <Link to="/Login">
             <p>Already have an account?</p>
           </Link>
@@ -204,8 +245,8 @@ export default Signup;
 //
 // const [user, setUser] = useState(initialUser);
 
- // const newUser = {
-    //   email: formValues.email.trim(),
-    //   username: formValues.username.trim(),
-    //   password: formValues.password
-    // };
+// const newUser = {
+//   email: formValues.email.trim(),
+//   username: formValues.username.trim(),
+//   password: formValues.password
+// };
