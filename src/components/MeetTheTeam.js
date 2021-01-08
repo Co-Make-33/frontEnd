@@ -45,15 +45,19 @@ const SingleCard = styled.div`
     /* left */ rgba(255, 255, 255, 0.15) -6px 0px 10px;
   border: 2px solid mintcream;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     width: 75%;
     justify-content: space-evenly;
+  }
+
+  @media (min-width: 1600px) {
+    width: 30%;
   }
 `;
 
 const Avatar = styled.img`
   width: 33%;
-  margin: 2%;
+  margin: auto 2%;
   border-radius: 50%;
 `;
 
@@ -61,14 +65,23 @@ const ProfileInfo = styled.div`
   width: 75%;
   margin: 2%;
   h2 {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-top: 0;
+    @media (min-width: 1600px) {
+      font-size: 2rem;
+    }
   }
 `;
 
 const UserInfo = styled.div`
-  font-size: 0.75rem;
-  line-height: 0.5rem;
+  font-size: 1.2rem;
+  @media (max-width: 800px) {
+    font-size: 1rem;
+  }
+  @media (min-width: 1600px) {
+    font-size: 1.3rem;
+    line-height: 1.4rem;
+  }
 `;
 
 const teamMembers = [
